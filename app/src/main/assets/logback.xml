@@ -1,0 +1,25 @@
+<configuration>
+    <!-- Create a logcat appender -->
+    <appender name="logcat" class="ch.qos.logback.classic.android.LogcatAppender">
+        <encoder>
+            <pattern>%msg</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="logcatWithMethod" class="ch.qos.logback.classic.android.LogcatAppender">
+        <encoder>
+            <pattern>%method %msg</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Write DEBUG messages from class B to its own log -->
+    <logger name="bouvet.loggertestapp.LogBackNativeTest" level="DEBUG">
+        <appender-ref ref="logcat" />
+    </logger>
+
+     <logger name="bouvet.loggertestapp.LogBackExtractMethodTest" level="DEBUG">
+        <appender-ref ref="logcatWithMethod" />
+    </logger>
+
+
+</configuration>
