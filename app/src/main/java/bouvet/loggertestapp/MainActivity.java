@@ -1,36 +1,46 @@
 package bouvet.loggertestapp;
 
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
 
-  private static final int[] NR_OF_CALLS_LIST = new int[] {1,10,100,1000,10000};
+  private static final int[] NR_OF_CALLS_LIST = new int[] {1000000};
   private List<LoggerTest> loggerTests;
+  private TextView resultView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    TextView resultView = (TextView) findViewById(R.id.result_textview);
+    resultView = (TextView) findViewById(R.id.result_textview);
     resultView.setMovementMethod(new ScrollingMovementMethod());
     setupTests();
+
+
+    File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "logfiles");
+    Log.d("Absolutepath", file.getAbsolutePath());
+    Log.d("path", file.getPath());
   }
 
   private void setupTests() {
     loggerTests = new ArrayList<>();
-    loggerTests.add(new NativeTest());
-    loggerTests.add(new LogBackNativeTest());
-    loggerTests.add(new LogBackExtractMethodTest());
+//    loggerTests.add(new NativeTest());
+//    loggerTests.add(new LogBackNativeTest());
+//    loggerTests.add(new LogBackExtractMethodTest());
+    loggerTests.add(new LogBackRollingFileTest());
   }
 
   public void runTests(View view) {
@@ -40,8 +50,7 @@ public class MainActivity extends ActionBarActivity {
       builder.append(runTests(nrOfCalls).concat("\n"));
     }
 
-    TextView textView = (TextView) findViewById(R.id.result_textview);
-    textView.setText(builder.toString());
+    if (resultView != null) resultView.setText(builder.toString());
   }
 
   private String runTests(int nrOfCalls) {
@@ -80,6 +89,4 @@ public class MainActivity extends ActionBarActivity {
 
     return super.onOptionsItemSelected(item);
   }
-
-
 }

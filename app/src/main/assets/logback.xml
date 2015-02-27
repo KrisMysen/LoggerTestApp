@@ -1,4 +1,26 @@
 <configuration>
+
+    <property name="EXT_FILES_DIR" value="/storage/emulated/0/DCIM/logfiles"/>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${EXT_FILES_DIR}/bouvet/logs/test.log</file>
+        <append>false</append>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${EXT_FILES_DIR}/bouvet/logs/test.%i.log.zip</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>4</maxIndex>
+        </rollingPolicy>
+
+        <!-- Overridden SizeBasedTriggeringPolicy -->
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>1MB</maxFileSize>
+        </triggeringPolicy>
+
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <!-- Create a logcat appender -->
     <appender name="logcat" class="ch.qos.logback.classic.android.LogcatAppender">
         <encoder>
@@ -21,5 +43,8 @@
         <appender-ref ref="logcatWithMethod" />
     </logger>
 
+    <logger name="bouvet.loggertestapp.LogBackRollingFileTest" level="DEBUG">
+        <appender-ref ref="FILE" />
+    </logger>
 
 </configuration>
