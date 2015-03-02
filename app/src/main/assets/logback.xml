@@ -3,7 +3,7 @@
     <property name="EXT_FILES_DIR" value="/storage/emulated/0/DCIM/logfiles"/>
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${EXT_FILES_DIR}/bouvet/logs/test.log</file>
-        <append>false</append>
+        <append>true</append>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
             <fileNamePattern>${EXT_FILES_DIR}/bouvet/logs/test.%i.log.zip</fileNamePattern>
@@ -46,5 +46,9 @@
     <logger name="bouvet.loggertestapp.LogBackRollingFileTest" level="DEBUG">
         <appender-ref ref="FILE" />
     </logger>
+
+    <root level="ERROR">
+        <appender-ref ref="FILE" />
+    </root>
 
 </configuration>

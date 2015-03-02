@@ -29,10 +29,9 @@ public class MainActivity extends ActionBarActivity {
     resultView.setMovementMethod(new ScrollingMovementMethod());
     setupTests();
 
+    Thread.setDefaultUncaughtExceptionHandler(new CustomUncaughtExceptionHandler(Thread.getDefaultUncaughtExceptionHandler()));
 
-    File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "logfiles");
-    Log.d("Absolutepath", file.getAbsolutePath());
-    Log.d("path", file.getPath());
+
   }
 
   private void setupTests() {
@@ -44,6 +43,9 @@ public class MainActivity extends ActionBarActivity {
   }
 
   public void runTests(View view) {
+
+    runTests(view);
+
     StringBuilder builder = new StringBuilder();
 
     for (int nrOfCalls : NR_OF_CALLS_LIST) {
